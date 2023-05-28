@@ -198,6 +198,8 @@ tuntap_sys_set_ipv6(struct device *dev, t_tun_in6_addr *s6, uint32_t bits) {
 int
 tuntap_sys_set_ifname(struct device *dev, const char *ifname, size_t len) {
 	struct ifreq ifr;
+	// https://github.com/LaKabane/libtuntap/issues/32
+	memset(ifr.ifr_newname, 0, IF_NAMESIZE);
 
 	(void)strncpy(ifr.ifr_name, dev->if_name, IF_NAMESIZE);
 	(void)strncpy(ifr.ifr_newname, ifname, len);
